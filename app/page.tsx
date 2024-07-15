@@ -13,7 +13,7 @@ export default function IndexPage() {
         <p className="max-w-[700px] text-lg text-muted-foreground">
           {siteConfig.description} 
           Tech stack used 
-          - Backend : Node JS, Nest JS, TypeORM, PostgreSQL
+          - Backend : Node JS, Nest JS, Mysql
           - Frontend : React ks, Tailwind CSS, Next JS, Shacdn ui
         </p>
       </div>
