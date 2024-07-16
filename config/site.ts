@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "PT Supra Boga Lestari",
+  name: "Membership System",
   description:
     "CRUD Membership System",
   mainNav: [

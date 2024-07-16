@@ -1,4 +1,5 @@
 
+import { Button } from "@/components/ui/button"
 import { columns, Payment } from "./column"
 import { DataTable } from "./data-table"
 
@@ -20,6 +21,11 @@ export default async function DemoPage() {
 
   return (
     <div className="container mx-auto py-10">
+      <div className="mb-4 "> 
+        <a href="/members/add">
+        <Button>Add data</Button>
+        </a>
+      </div>
       <DataTable columns={columns} data={data} />
     </div>
   )
