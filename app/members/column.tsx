@@ -5,6 +5,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import axios from 'axios';
 
 export type Member = {
   id: string;
@@ -21,7 +22,7 @@ export type Member = {
   maritalStatus: 'single' | 'married' | 'divorced' | 'widowed';
 };
 
-export const columns: ColumnDef<Member>[] = [
+const columns: ColumnDef<Member>[] = [
   {
     accessorKey: 'fullName',
     header: 'Full Name',
@@ -90,10 +91,27 @@ export const columns: ColumnDef<Member>[] = [
   },
 ];
 
-function handleEdit(member: Member) {
-  // Handle edit logic here
+function handleDelete(member: Member) {
+  if (!window.confirm('Are you sure you want to delete this member?')) {
+    return;
+  }
+
+  axios
+    .delete(`http://localhost:3000/api/members/${member.id}`)
+    .then((response) => {
+      console.log('Member deleted successfully:', response.data);
+      alert('Member deleted successfully');
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.error('Failed to delete member:', error);
+      alert('Failed to delete member');
+    });
 }
 
-function handleDelete(member: Member) {
-  // Handle delete logic here
+function handleEdit(member: Member) {
+  console.log('Editing member:', member);
+  window.location.href = `/members/edit/${member.id}`;
 }
+
+export { columns, handleEdit, handleDelete };

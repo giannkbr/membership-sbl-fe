@@ -49,12 +49,11 @@ export default function Page() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await axios.post('/api/members', values); // Assuming your API endpoint for adding members is '/api/members'
-      console.log('Data submitted successfully:', response.data);
-      // Optionally, you can redirect or show a success message here
+      const response = await axios.post('http://localhost:3000/api/members', values);
+      alert('Data submitted successfully');
+      window.location.href = '/members';
     } catch (error) {
-      console.error('Failed to submit data:', error);
-      // Handle error scenarios, such as displaying an error message to the user
+      alert('Failed to submit data');
     }
   }
 
