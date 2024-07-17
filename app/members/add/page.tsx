@@ -1,5 +1,6 @@
 'use client';
 
+import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -46,8 +47,15 @@ export default function Page() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await axios.post('/api/members', values); // Assuming your API endpoint for adding members is '/api/members'
+      console.log('Data submitted successfully:', response.data);
+      // Optionally, you can redirect or show a success message here
+    } catch (error) {
+      console.error('Failed to submit data:', error);
+      // Handle error scenarios, such as displaying an error message to the user
+    }
   }
 
   return (
