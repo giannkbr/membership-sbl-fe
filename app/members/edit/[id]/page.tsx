@@ -1,23 +1,22 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useParams, useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import axios from 'axios';
+import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 
-import { DatePickerDemo } from '@/components/ui/date-picker';
-
 const formSchema = z.object({
   fullName: z.string().min(1, { message: 'Nama lengkap wajib diisi.' }),
   placeOfBirth: z.string().min(1, { message: 'Tempat lahir wajib diisi.' }),
-  dateOfBirth: z.date().refine((val) => val instanceof Date, { message: 'Tanggal lahir wajib diisi.' }),
+  dateOfBirth: z.string().refine((val) => !isNaN(Date.parse(val)), { message: 'Tanggal lahir wajib diisi.' }),
   phoneNumber: z.string().regex(/^\d+$/, { message: 'Nomor telepon wajib angka.' }),
   email: z.string().email({ message: 'Email harus format yang benar.' }),
   address: z.string().min(1, { message: 'Alamat wajib diisi.' }),
@@ -28,13 +27,17 @@ const formSchema = z.object({
   maritalStatus: z.enum(['Single', 'Married'], { message: 'Status pernikahan wajib dipilih.' }),
 });
 
-export default function Page() {
+export default function EditMemberPage() {
+  const params = useParams();
+  const router = useRouter();
+  const id = params.id; // Get id from URL parameters
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       fullName: '',
       placeOfBirth: '',
-      dateOfBirth: new Date(),
+      dateOfBirth: '',
       phoneNumber: '',
       email: '',
       address: '',
@@ -46,10 +49,41 @@ export default function Page() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  useEffect(() => {
+    if (id) {
+      axios.get(`http://localhost:3000/api/members/${id}`).then((response) => {
+        const data = response.data;
+        form.reset({
+          fullName: data.fullName,
+          placeOfBirth: data.placeOfBirth,
+          dateOfBirth: new Date(data.dateOfBirth).toISOString().split('T')[0],
+          phoneNumber: data.phoneNumber,
+          email: data.email,
+          address: data.address,
+          province: data.province,
+          city: data.city,
+          gender: data.gender,
+          occupation: data.occupation,
+          maritalStatus: data.maritalStatus,
+        });
+      });
+    }
+  }, [id]);
 
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const formattedData = {
+        ...values,
+        dateOfBirth: new Date(values.dateOfBirth).toISOString(),
+      };
+
+      await axios.put(`http://localhost:3000/api/members/${id}`, formattedData);
+      alert('Data updated successfully');
+      router.push('/members');
+    } catch (error) {
+      alert('Failed to update data');
+    }
+  }
   return (
     <div className="container mx-auto py-10">
       <div className="">
@@ -88,9 +122,7 @@ export default function Page() {
                 <FormItem>
                   <FormLabel>Tanggal Lahir</FormLabel>
                   <FormControl>
-                    <div className="mt-3">
-                      <DatePickerDemo />
-                    </div>
+                    <Input type="date" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -147,7 +179,7 @@ export default function Page() {
                         <SelectValue placeholder="Pilih Provinsi" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Jakarta">DKI Jakarta</SelectItem>
+                        <SelectItem value="DKI Jakarta">DKI Jakarta</SelectItem>
                         <SelectItem value="Jawa Barat">Jawa Barat</SelectItem>
                       </SelectContent>
                     </Select>
