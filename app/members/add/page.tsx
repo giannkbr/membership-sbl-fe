@@ -72,9 +72,9 @@ export default function Page() {
               name="fullName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nama Lengkap</FormLabel>
+                  <FormLabel>Fullname</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nama Lengkap" {...field} />
+                    <Input placeholder="Fullname" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -85,9 +85,9 @@ export default function Page() {
               name="placeOfBirth"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tempat Lahir</FormLabel>
+                  <FormLabel>Place of Birth</FormLabel>
                   <FormControl>
-                    <Input placeholder="Tempat Lahir" {...field} />
+                    <Input placeholder="Place of Birth" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -98,7 +98,7 @@ export default function Page() {
               name="dateOfBirth"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tanggal Lahir</FormLabel>
+                  <FormLabel>Date of Birth</FormLabel>
                   <FormControl>
                     <Input type="date" {...field} />
                   </FormControl>
@@ -111,9 +111,9 @@ export default function Page() {
               name="phoneNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nomor Telepon</FormLabel>
+                  <FormLabel>Phone Number</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nomor Telepon" {...field} />
+                    <Input placeholder="Phone Number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -137,9 +137,9 @@ export default function Page() {
               name="address"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Alamat</FormLabel>
+                  <FormLabel>Address</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Alamat" {...field} />
+                    <Textarea placeholder="Address" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -150,11 +150,11 @@ export default function Page() {
               name="province"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Provinsi</FormLabel>
+                  <FormLabel>Province</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Pilih Provinsi" />
+                        <SelectValue placeholder="Select Province" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="DKI Jakarta">DKI Jakarta</SelectItem>
@@ -171,11 +171,11 @@ export default function Page() {
               name="city"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Kota</FormLabel>
+                  <FormLabel>City</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Pilih Kota" />
+                        <SelectValue placeholder="Select City" />
                       </SelectTrigger>
                       <SelectContent>
                         {form.watch('province') === 'DKI Jakarta' && (
@@ -206,7 +206,7 @@ export default function Page() {
               name="gender"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Jenis Kelamin</FormLabel>
+                  <FormLabel>Gender</FormLabel>
                   <FormControl>
                     <div className="flex space-x-4">
                       <label className="flex items-center space-x-2">
@@ -228,11 +228,11 @@ export default function Page() {
               name="occupation"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Pekerjaan</FormLabel>
+                  <FormLabel>Occupation</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Pilih Pekerjaan" />
+                        <SelectValue placeholder="Select Occupation" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="Engineer">Engineer</SelectItem>
@@ -250,11 +250,11 @@ export default function Page() {
               name="maritalStatus"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Status Pernikahan</FormLabel>
+                  <FormLabel>Marital Status</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Pilih Status" />
+                        <SelectValue placeholder="Select Status" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="Single">Single</SelectItem>
