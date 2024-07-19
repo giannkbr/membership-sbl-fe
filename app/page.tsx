@@ -16,7 +16,9 @@ export default function IndexPage() {
         </p>
       </div>
       <div className="flex gap-4">
-        <Button> View Members </Button>
+        <Link href="/members">
+          <Button> View Members </Button>
+        </Link>
       </div>
     </section>
   );
